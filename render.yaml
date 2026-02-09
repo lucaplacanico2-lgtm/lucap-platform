@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: lucap-backend
+    env: node
+    plan: free
+    buildCommand: cd server && npm install
+    startCommand: cd server && node src/index.js
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+
+  - type: web
+    name: lucap-frontend
+    env: static
+    plan: free
+    buildCommand: cd web && npm install && npm run build
+    staticPublishPath: web/dist
+    envVars:
+      - key: VITE_API_BASE
+        value: https://lucap-backend.onrender.com
